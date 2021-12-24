@@ -1,12 +1,12 @@
 package mobile
 
 import (
-	"github.com/gongzhxu/ebiten-game/gamelib/twenty48"
+	"github.com/gongzhxu/ebiten-game/gamelib/blocks"
 	"github.com/hajimehoshi/ebiten/v2/mobile"
 )
 
 func init() {
-	game, err := twenty48.NewGame()
+	game, err := blocks.NewGame()
 	if err != nil {
 		panic(err)
 	}
