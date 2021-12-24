@@ -6,6 +6,7 @@ import (
 	"image/color"
 	_ "image/png"
 
+	"github.com/gogf/gf/frame/g"
 	"github.com/hajimehoshi/ebiten/v2"
 	rblocks "github.com/hajimehoshi/ebiten/v2/examples/resources/images/blocks"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -30,6 +31,10 @@ func anyGamepadVirtualButtonJustPressed(i *Input) bool {
 		return false
 	}
 
+	if i.IsRotateRightJustPressed() {
+		return true
+	}
+
 	for _, b := range virtualGamepadButtons {
 		if i.gamepadConfig.IsButtonJustPressed(b) {
 			return true
@@ -40,6 +45,11 @@ func anyGamepadVirtualButtonJustPressed(i *Input) bool {
 
 func (s *TitleScene) Update(state *GameState) error {
 	s.count++
+	keys := inpututil.PressedKeys()
+	if len(keys) > 0 {
+		g.Log().Infof("TitleScene.Update keys: %+v", keys)
+	}
+
 	if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
 		state.SceneManager.GoTo(NewGameScene())
 		return nil
