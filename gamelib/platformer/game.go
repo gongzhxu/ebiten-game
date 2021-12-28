@@ -6,6 +6,7 @@ import (
 	"image"
 	_ "image/png"
 
+	"github.com/gongzhxu/ebiten-game/gamelib/internal/input"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	rplatformer "github.com/hajimehoshi/ebiten/v2/examples/resources/images/platformer"
@@ -105,13 +106,17 @@ func (c *char) draw(screen *ebiten.Image) {
 }
 
 type Game struct {
-	gopher *char
+	gopher     *char
+	touchInput *input.TouchInput
+	x16        int
 }
 
 func NewGame() (*Game, error) {
 	ebiten.SetWindowSize(screenWidth, screenHeight)
 	ebiten.SetWindowTitle("Platformer (Ebiten Demo)")
-	return &Game{}, nil
+	return &Game{
+		touchInput: input.NewTouchInput(),
+	}, nil
 }
 
 func (g *Game) Update() error {
@@ -125,18 +130,42 @@ func (g *Game) Update() error {
 	} else if ebiten.IsKeyPressed(ebiten.KeyD) || ebiten.IsKeyPressed(ebiten.KeyArrowRight) {
 		g.gopher.vx = 4 * unit
 	}
+
 	if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
 		g.gopher.tryJump()
 	}
+
+	g.touchInput.Update()
+	if dir, ok := g.touchInput.Dir(); ok {
+		if dir == input.DirLeft {
+			g.gopher.vx = -4 * unit
+		} else if dir == input.DirRight {
+			g.gopher.vx = 4 * unit
+		} else {
+			g.gopher.tryJump()
+		}
+	}
+
 	g.gopher.update()
 	return nil
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	// Draws Background Image
+	g.x16++
+	if g.x16 > screenWidth {
+		g.x16 = 0
+	}
+
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Scale(0.5, 0.5)
-	screen.DrawImage(backgroundImage, op)
+
+	op.GeoM.Translate(0, 0)
+	screen.DrawImage(backgroundImage.
+		SubImage(image.Rect(g.x16*2, 0, screenWidth*2, screenHeight*2)).(*ebiten.Image), op)
+	op.GeoM.Translate(float64(screenWidth-g.x16), 0)
+	screen.DrawImage(backgroundImage.
+		SubImage(image.Rect(0, 0, g.x16*2, screenHeight*2)).(*ebiten.Image), op)
 
 	// Draws the Gopher
 	g.gopher.draw(screen)

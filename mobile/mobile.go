@@ -7,7 +7,7 @@ import (
 )
 
 func init() {
-	game, err := gamelib.NewGame()
+	game, err := gamelib.NewGame("platformer")
 	if err != nil {
 		g.Log().Panic(err)
 	}
