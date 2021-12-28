@@ -1,14 +1,15 @@
 package mobile
 
 import (
-	"github.com/gongzhxu/ebiten-game/gamelib/blocks"
+	"github.com/gogf/gf/frame/g"
+	"github.com/gongzhxu/ebiten-game/gamelib"
 	"github.com/hajimehoshi/ebiten/v2/mobile"
 )
 
 func init() {
-	game, err := blocks.NewGame()
+	game, err := gamelib.NewGame()
 	if err != nil {
-		panic(err)
+		g.Log().Panic(err)
 	}
 
 	mobile.SetGame(game)

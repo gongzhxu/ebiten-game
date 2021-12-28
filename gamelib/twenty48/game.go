@@ -34,6 +34,9 @@ func NewGame() (*Game, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	ebiten.SetWindowSize(ScreenWidth, ScreenHeight)
+	ebiten.SetWindowTitle("2048 (Ebiten Demo)")
 	return g, nil
 }
 
