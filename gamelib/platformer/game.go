@@ -66,25 +66,23 @@ type char struct {
 }
 
 func (c *char) tryJump() {
-	// Now the character can jump anytime, even when the character is not on the ground.
-	// If you want to restrict the character to jump only when it is on the ground, you can add an 'if' clause:
-	//
-	//     if gopher.y == groundY * unit {
-	//         ...
 	c.vy = -10 * unit
 }
 
 func (c *char) update() {
 	c.x += c.vx
 	c.y += c.vy
+
 	if c.y > groundY*unit {
 		c.y = groundY * unit
 	}
+
 	if c.vx > 0 {
 		c.vx -= 4
 	} else if c.vx < 0 {
 		c.vx += 4
 	}
+
 	if c.vy < 20*unit {
 		c.vy += 8
 	}
@@ -97,6 +95,18 @@ func (c *char) draw(screen *ebiten.Image) {
 		s = rightSprite
 	case c.vx < 0:
 		s = leftSprite
+	}
+
+	if c.x > screenWidth*unit {
+		c.x = 0
+	}
+
+	if c.x/unit < -70 {
+		c.x = screenWidth * unit
+	}
+
+	if c.y < 70 {
+		c.y = 70
 	}
 
 	op := &ebiten.DrawImageOptions{}

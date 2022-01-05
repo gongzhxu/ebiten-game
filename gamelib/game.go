@@ -3,8 +3,11 @@ package gamelib
 import (
 	"fmt"
 
+	"github.com/gongzhxu/ebiten-game/gamelib/cgotest"
+
 	"github.com/gongzhxu/ebiten-game/gamelib/blocks"
 	"github.com/gongzhxu/ebiten-game/gamelib/carotidartillery"
+	"github.com/gongzhxu/ebiten-game/gamelib/face"
 	"github.com/gongzhxu/ebiten-game/gamelib/flappy"
 	"github.com/gongzhxu/ebiten-game/gamelib/mascot"
 	"github.com/gongzhxu/ebiten-game/gamelib/paint"
@@ -34,6 +37,10 @@ func NewGame(gameTypes ...string) (game ebiten.Game, err error) {
 		game, err = platformer.NewGame()
 	case "carotidartillery":
 		game, err = carotidartillery.NewGame()
+	case "face":
+		game, err = face.NewGame()
+	case "cgotest":
+		game, err = cgotest.NewGame()
 	default:
 		err = fmt.Errorf("unkonwn game type: %s", gameType)
 	}

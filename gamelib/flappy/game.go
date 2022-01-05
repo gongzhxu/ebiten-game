@@ -14,9 +14,9 @@ import (
 	"golang.org/x/image/font/opentype"
 
 	gframe "github.com/gogf/gf/frame/g"
-	raudio "github.com/gongzhxu/ebiten-game/gamelib/resources/audio"
-	rfonts "github.com/gongzhxu/ebiten-game/gamelib/resources/fonts"
-	rflappy "github.com/gongzhxu/ebiten-game/gamelib/resources/images/flappy"
+	raudio "github.com/gongzhxu/ebiten-game/gamelib/internal/resources/audio"
+	rfonts "github.com/gongzhxu/ebiten-game/gamelib/internal/resources/fonts"
+	rflappy "github.com/gongzhxu/ebiten-game/gamelib/internal/resources/images/flappy"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
